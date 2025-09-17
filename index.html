@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crossword Puzzle Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Start Screen -->
+    <div id="startScreen" class="screen active">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-puzzle-piece"></i>
+                <h1>Crossword Puzzle</h1>
+            </div>
+            <p class="subtitle">Test your knowledge across different subjects!</p>
+            <button id="startBtn" class="btn btn-primary">
+                <i class="fas fa-play"></i>
+                Start Game
+            </button>
+            <div class="theme-toggle">
+                <button id="themeToggle" class="btn btn-secondary">
+                    <i class="fas fa-moon"></i>
+                    Dark Mode
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Screen -->
+    <div id="registrationScreen" class="screen">
+        <div class="container">
+            <div class="header">
+                <h2>Welcome!</h2>
+                <p>Please enter your name to continue</p>
+            </div>
+            <form id="registrationForm" class="form">
+                <div class="input-group">
+                    <label for="playerName">Your Name</label>
+                    <input type="text" id="playerName" required placeholder="Enter your name">
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-arrow-right"></i>
+                    Continue
+                </button>
+            </form>
+            <button id="backToStart" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i>
+                Back
+            </button>
+        </div>
+    </div>
+
+    <!-- Subject Selection Screen -->
+    <div id="subjectScreen" class="screen">
+        <div class="container">
+            <div class="header">
+                <h2>Choose Your Subject</h2>
+                <p>Select a subject to test your knowledge</p>
+            </div>
+            <div class="subject-grid">
+                <div class="subject-card" data-subject="datascience">
+                    <i class="fas fa-database"></i>
+                    <h3>Data Structure & Algorithm</h3>
+                    <p>Data analysis, algorithms, and machine learning</p>
+                </div>
+                <div class="subject-card" data-subject="fundamental">
+                    <i class="fas fa-cube"></i>
+                    <h3>Fundamental of Data Science</h3>
+                    <p>Core principles and basic concepts</p>
+                </div>
+                <div class="subject-card" data-subject="engineering">
+                    <i class="fas fa-cogs"></i>
+                    <h3>Engineering Economy</h3>
+                    <p>Cost analysis and economic principles</p>
+                </div>
+                <div class="subject-card" data-subject="management">
+                    <i class="fas fa-users"></i>
+                    <h3>Industrial Management</h3>
+                    <p>Team management and leadership</p>
+                </div>
+                <div class="subject-card" data-subject="lifeskills">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Applied Life Skills</h3>
+                    <p>Communication and problem solving</p>
+                </div>
+                <div class="subject-card" data-subject="environmental">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Environmental Science</h3>
+                    <p>Ecology and sustainability</p>
+                </div>
+            </div>
+            <button id="backToRegistration" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i>
+                Back
+            </button>
+        </div>
+    </div>
+
+    <!-- Difficulty Selection Screen -->
+    <div id="difficultyScreen" class="screen">
+        <div class="container">
+            <div class="header">
+                <h2>Choose Difficulty</h2>
+                <p>Select the challenge level for <span id="selectedSubject"></span></p>
+            </div>
+            <div class="difficulty-grid">
+                <div class="difficulty-card" data-difficulty="easy">
+                    <i class="fas fa-seedling"></i>
+                    <h3>Easy</h3>
+                    <p>Perfect for beginners</p>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="difficulty-card" data-difficulty="moderate">
+                    <i class="fas fa-tree"></i>
+                    <h3>Moderate</h3>
+                    <p>For experienced players</p>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="difficulty-card" data-difficulty="hard">
+                    <i class="fas fa-fire"></i>
+                    <h3>Hard</h3>
+                    <p>Ultimate challenge</p>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+            <button id="backToSubject" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i>
+                Back
+            </button>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="gameScreen" class="screen">
+        <div class="game-container">
+            <div class="game-header">
+                <div class="game-info">
+                    <h2 id="gameTitle">Crossword Puzzle</h2>
+                    <div class="timer">
+                        <i class="fas fa-clock"></i>
+                        <span id="timer">00:00</span>
+                    </div>
+                </div>
+                <div class="game-controls">
+                    <button id="pauseGame" class="btn btn-secondary">
+                        <i class="fas fa-pause"></i>
+                        Pause
+                    </button>
+                </div>
+            </div>
+
+            <div class="game-content">
+                <div class="crossword-section">
+                    <div id="crosswordGrid" class="crossword-grid"></div>
+                </div>
+
+                <div class="clues-section">
+                    <div class="clues-tabs">
+                        <button class="tab-btn active" data-tab="across">Across</button>
+                        <button class="tab-btn" data-tab="down">Down</button>
+                    </div>
+                    <div class="clues-content">
+                        <div id="acrossClues" class="clues-list active"></div>
+                        <div id="downClues" class="clues-list"></div>
+                    </div>
+                    <div class="game-actions">
+                        <button id="checkAnswers" class="btn btn-primary">
+                            <i class="fas fa-check"></i>
+                            Check Answers
+                        </button>
+                        <button id="hintBtn" class="btn btn-secondary">
+                            <i class="fas fa-lightbulb"></i>
+                            Hint
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Score Screen -->
+    <div id="scoreScreen" class="screen">
+        <div class="container">
+            <div class="score-header">
+                <h2>Game Complete!</h2>
+                <div class="score-display">
+                    <div class="score-circle">
+                        <span id="finalScore">0</span>
+                        <small>/100</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="score-details">
+                <div class="score-item">
+                    <i class="fas fa-user"></i>
+                    <span>Player: <strong id="playerNameDisplay"></strong></span>
+                </div>
+                <div class="score-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Time: <strong id="timeTaken"></strong></span>
+                </div>
+                <div class="score-item">
+                    <i class="fas fa-trophy"></i>
+                    <span>Subject: <strong id="subjectDisplay"></strong></span>
+                </div>
+                <div class="score-item">
+                    <i class="fas fa-signal"></i>
+                    <span>Difficulty: <strong id="difficultyDisplay"></strong></span>
+                </div>
+            </div>
+
+            <div class="score-actions">
+                <button id="playAgain" class="btn btn-primary">
+                    <i class="fas fa-redo"></i>
+                    Play Again
+                </button>
+                <button id="viewLeaderboard" class="btn btn-secondary">
+                    <i class="fas fa-list"></i>
+                    Leaderboard
+                </button>
+                <button id="backToHome" class="btn btn-secondary">
+                    <i class="fas fa-home"></i>
+                    Home
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboard Modal -->
+    <div id="leaderboardModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Leaderboard</h3>
+                <button id="closeLeaderboard" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="leaderboardList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pause Modal -->
+    <div id="pauseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Game Paused</h3>
+            </div>
+            <div class="modal-body">
+                <p>Your game is paused. Click resume to continue.</p>
+            </div>
+            <div class="modal-actions">
+                <button id="resumeGame" class="btn btn-primary">
+                    <i class="fas fa-play"></i>
+                    Resume
+                </button>
+                <button id="quitGame" class="btn btn-secondary">
+                    <i class="fas fa-times"></i>
+                    Quit
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
